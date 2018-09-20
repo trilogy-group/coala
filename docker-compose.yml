@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: corda-builder
+    ports:
+      # open possible ports for Jolokia JVM agents
+      - "7005-7010:7005-7010"
+      # open possible ports for Corda nodes
+      - "10000-10020:10000-10020"
+    volumes:
+      - .:/app:Z
+    command: bash -c "chmod +x gradlew && bash"
+    tty: true
